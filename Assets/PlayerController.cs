@@ -4,10 +4,20 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class PlayerController : NetworkBehaviour {
-
+	private Camera camera;
 	// Use this for initialization
 	void Start () {
-		
+		if (!isLocalPlayer) {
+			return;
+		}
+		camera = Camera.main;
+		var lookAtCamera = camera.GetComponent(typeof(LookAtCamera)) as LookAtCamera;
+
+		if (lookAtCamera != null) {
+			lookAtCamera.target = this.gameObject;
+		}
+
+
 	}
 	
 	void Update()
@@ -22,6 +32,11 @@ public class PlayerController : NetworkBehaviour {
 
 		transform.Rotate(0, x, 0);
 		transform.Translate(0, 0, z);
+
+
+		//camera.transform.position = transform.position;
+		//camera.transform.RotateAround(transform.position, new Vector3(-3.0f,0,0), 0.0f);
+
 	}
 
 	public override void OnStartLocalPlayer()
