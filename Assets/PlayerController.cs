@@ -10,6 +10,7 @@ public class PlayerController : NetworkBehaviour {
 	private Vector3 moveDirection = Vector3.zero;
 	public float sensitivityX = 2F;
 
+
 	private Camera camera;
 	private Rigidbody rb;
 
@@ -35,11 +36,16 @@ public class PlayerController : NetworkBehaviour {
 		}
 		CharacterController controller = GetComponent<CharacterController>();
 
+
+		controller.transform.Rotate (0, Input.GetAxis ("Mouse X") *  sensitivityX, 0);
+
 		if (controller.isGrounded) {
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 			moveDirection = transform.TransformDirection(moveDirection);
 //			controller.transform.rotation = new Quaternion (moveDirection.x, moveDirection.y, moveDirection.z, Time.deltaTime * Input.GetAxis ("Mouse X") * sensitivityX);
 			moveDirection *= speed;
+
+
 
 			if (Input.GetButton ("Jump")) {
 				moveDirection.y = jumpSpeed;
