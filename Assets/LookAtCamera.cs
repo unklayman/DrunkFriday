@@ -10,7 +10,7 @@ public class LookAtCamera : MonoBehaviour {
 
 	void Start() {
 		//offset = target.transform.position - transform.position;
-		offset = new Vector3(0,-5.0f,3);
+		offset = new Vector3(0,-2.0f,3);
 	}
 
 	void LateUpdate() {
