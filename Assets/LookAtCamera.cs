@@ -33,6 +33,9 @@ public class LookAtCamera : MonoBehaviour {
 			if (this.target.tag == "Ship") {
 				this.offset = new Vector3 (0, -15.0f, 10);
 			}
+			if (this.target.tag == "Player") {
+				this.offset = new Vector3(0,-2.0f,3);
+			}
 		}
 	}
 }
