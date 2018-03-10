@@ -9,29 +9,28 @@ public class PlayerController : NetworkBehaviour {
 	public float gravity = 20.0F;
 	private Vector3 moveDirection = Vector3.zero;
 	public float sensitivityX = 2F;
+	public bool isBusy = false;
 
-	private Camera camera;
-
+	void Start(){
+		
+	}
 
 	void Update()
 	{
-		if (!isLocalPlayer)
+		if (!isLocalPlayer && !isBusy)
 		{
 			return;
 		}
-		CharacterController controller = GetComponent<CharacterController>();
 
+
+		CharacterController controller = GetComponent<CharacterController>();
 
 		controller.transform.Rotate (0, Input.GetAxis ("Mouse X") *  sensitivityX, 0);
 
 		if (controller.isGrounded) {
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 			moveDirection = transform.TransformDirection(moveDirection);
-//			controller.transform.rotation = new Quaternion (moveDirection.x, moveDirection.y, moveDirection.z, Time.deltaTime * Input.GetAxis ("Mouse X") * sensitivityX);
 			moveDirection *= speed;
-
-
-
 			if (Input.GetButton ("Jump")) {
 				moveDirection.y = jumpSpeed;
 			}
@@ -46,11 +45,8 @@ public class PlayerController : NetworkBehaviour {
 	public override void OnStartLocalPlayer()
 	{
 		GetComponent<MeshRenderer>().material.color = Color.blue;
-		camera = Camera.main;
-		var lookAtCamera = camera.GetComponent(typeof(LookAtCamera)) as LookAtCamera;
+		//MovementController.GetInstance().SetTarget (this.gameObject);
+		MainCameraController.GetInstance ().SetTarget (this.gameObject);
 
-		if (lookAtCamera != null) {
-			lookAtCamera.target = this.gameObject;
-		}
 	}
 }

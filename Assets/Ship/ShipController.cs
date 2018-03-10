@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class ShipController : MonoBehaviour {
 
-	public Camera shipCamera;
-
-
-
 	// Use this for initialization
 	void Start () {
-		//this.shipCamera = this.gameObject.GetComponent<Camera> ();
-		this.shipCamera.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -24,8 +18,10 @@ public class ShipController : MonoBehaviour {
 		if (player == null) { 
 			return;
 		}
-		var playerCamera = Camera.main;
-		playerCamera.enabled = false;
-		shipCamera.enabled = true;
+
+		var lookAtCamera = Camera.main.GetComponent(typeof(LookAtCamera)) as LookAtCamera;
+		if (lookAtCamera != null) {
+			lookAtCamera.SetTarget(this.gameObject);
+		}
 	}
 }
