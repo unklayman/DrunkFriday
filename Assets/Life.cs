@@ -5,6 +5,10 @@ using UnityEngine.Networking;
 
 
 public class Life : NetworkBehaviour {
+
+	void Start() {
+		Network.sendRate = 29;
+	}
 	
 	[ClientRpc]
 	public void RpcRespawn()

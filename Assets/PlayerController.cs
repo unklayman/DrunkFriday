@@ -15,12 +15,10 @@ public class PlayerController : NetworkBehaviour {
 
 	void Update()
 	{
-		if (!isLocalPlayer)
-		{
+		if (!isLocalPlayer) {
 			return;
 		}
 		CharacterController controller = GetComponent<CharacterController>();
-
 
 		controller.transform.Rotate (0, Input.GetAxis ("Mouse X") *  sensitivityX, 0);
 
@@ -29,8 +27,6 @@ public class PlayerController : NetworkBehaviour {
 			moveDirection = transform.TransformDirection(moveDirection);
 //			controller.transform.rotation = new Quaternion (moveDirection.x, moveDirection.y, moveDirection.z, Time.deltaTime * Input.GetAxis ("Mouse X") * sensitivityX);
 			moveDirection *= speed;
-
-
 
 			if (Input.GetButton ("Jump")) {
 				moveDirection.y = jumpSpeed;
