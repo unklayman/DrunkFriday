@@ -9,9 +9,26 @@ public class PlayerController : NetworkBehaviour {
 	public float gravity = 20.0F;
 	private Vector3 moveDirection = Vector3.zero;
 	public float sensitivityX = 2F;
+	public GameObject bulletPrefab;
+	public Transform bulletSpawn;
 
-	void Start(){
-		
+	[Command]
+	void CmdFire()
+	{
+		// Create the Bullet from the Bullet Prefab
+		var bullet = (GameObject)Instantiate (
+			bulletPrefab,
+			bulletSpawn.position,
+			bulletSpawn.rotation);
+
+		// Add velocity to the bullet
+		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+
+		// Spawn the bullet on the Clients
+		NetworkServer.Spawn(bullet);
+
+		// Destroy the bullet after 2 seconds
+		Destroy(bullet, 2.0f);
 	}
 
 	void Update()
@@ -19,6 +36,11 @@ public class PlayerController : NetworkBehaviour {
 		if (!isLocalPlayer)
 		{
 			return;
+		}
+
+		if (Input.GetKeyDown(KeyCode.Mouse0))
+		{
+			CmdFire();
 		}
 
 		CharacterController controller = GetComponent<CharacterController>();
