@@ -10,24 +10,9 @@ public class PlayerController : NetworkBehaviour {
 	private Vector3 moveDirection = Vector3.zero;
 	public float sensitivityX = 2F;
 
-
 	private Camera camera;
-	private Rigidbody rb;
 
-	// Use this for initialization
-	void Start () {
-		if (!isLocalPlayer) {
-			return;
-		}
-		rb = GetComponent<Rigidbody> ();
-		camera = Camera.main;
-		var lookAtCamera = camera.GetComponent(typeof(LookAtCamera)) as LookAtCamera;
 
-		if (lookAtCamera != null) {
-			lookAtCamera.target = this.gameObject;
-		}
-	}
-	
 	void Update()
 	{
 		if (!isLocalPlayer)
@@ -56,8 +41,16 @@ public class PlayerController : NetworkBehaviour {
 		controller.Move(moveDirection * Time.deltaTime);
 	}
 
+
+
 	public override void OnStartLocalPlayer()
 	{
 		GetComponent<MeshRenderer>().material.color = Color.blue;
+		camera = Camera.main;
+		var lookAtCamera = camera.GetComponent(typeof(LookAtCamera)) as LookAtCamera;
+
+		if (lookAtCamera != null) {
+			lookAtCamera.target = this.gameObject;
+		}
 	}
 }
