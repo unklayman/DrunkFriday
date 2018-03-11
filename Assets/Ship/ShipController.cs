@@ -5,15 +5,16 @@ using UnityEngine;
 public class ShipController : MonoBehaviour {
 
 	public GameObject Driver {get;set;}
+	private float maxSpeed = 50f;
 	private Rigidbody rb;
 
 	// Use this for initialization
 	void Start () {
-		rb = GetComponent<Rigidbody> ();
+		rb = gameObject.GetComponent<Rigidbody> ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		Move ();
 	}
 
@@ -23,6 +24,19 @@ public class ShipController : MonoBehaviour {
 			return;
 		}
 
+		if (Input.GetKeyDown (KeyCode.W)) {
+			rb.AddForce (transform.forward * 20f);
+		}
+		if (Input.GetKeyDown (KeyCode.S)) {
+			rb.AddForce (transform.forward * 0.05f);
+		}
 
+
+		if(rb.velocity.magnitude > maxSpeed)
+		{
+			rb.velocity = rb.velocity.normalized * maxSpeed;
+		}
 	}
+
+
 }

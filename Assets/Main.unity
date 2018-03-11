@@ -479,7 +479,6 @@ GameObject:
   - component: {fileID: 213057206}
   - component: {fileID: 213057205}
   - component: {fileID: 213057210}
-  - component: {fileID: 213057209}
   - component: {fileID: 213057211}
   m_Layer: 0
   m_Name: Main Camera
@@ -551,23 +550,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 17.577002, y: 0, z: 0}
---- !u!143 &213057209
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 213057204}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &213057210
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1936,11 +1918,11 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1974894863}
   serializedVersion: 2
-  m_Mass: 1000
+  m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
