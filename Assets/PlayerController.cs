@@ -8,9 +8,11 @@ public class PlayerController : NetworkBehaviour {
 	public float jumpSpeed = 8.0F;
 	public float gravity = 20.0F;
 	private Vector3 moveDirection = Vector3.zero;
-	public float sensitivityX = 2F;
+	public float sensitivity = 2F;
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
+
+	CharacterController controller ;
 
 	[Command]
 	void CmdFire()
@@ -43,14 +45,22 @@ public class PlayerController : NetworkBehaviour {
 			CmdFire();
 		}
 
-		CharacterController controller = GetComponent<CharacterController>();
+		Move ();
+	}
 
-		controller.transform.Rotate (0, Input.GetAxis ("Mouse X") *  sensitivityX, 0);
+	public override void OnStartLocalPlayer()
+	{
+		GetComponent<MeshRenderer>().material.color = Color.blue;
+		MainCameraController.GetInstance ().SetTarget (this.gameObject);
+		controller = GetComponent<CharacterController> ();
+	}
+
+	private void Move(){
+		controller.transform.Rotate (0, Input.GetAxis ("Mouse X") *  sensitivity, 0);
 		if (controller.isGrounded) {
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
-
 			if (Input.GetButton ("Jump")) {
 				moveDirection.y = jumpSpeed;
 			}
@@ -58,15 +68,5 @@ public class PlayerController : NetworkBehaviour {
 		}
 		moveDirection.y -= gravity * Time.deltaTime;
 		controller.Move(moveDirection * Time.deltaTime);
-	}
-
-
-
-	public override void OnStartLocalPlayer()
-	{
-		GetComponent<MeshRenderer>().material.color = Color.blue;
-		//MovementController.GetInstance().SetTarget (this.gameObject);
-		MainCameraController.GetInstance ().SetTarget (this.gameObject);
-
 	}
 }
