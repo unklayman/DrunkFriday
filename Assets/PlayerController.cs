@@ -11,8 +11,9 @@ public class PlayerController : NetworkBehaviour {
 	public float sensitivity = 2F;
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
+	private float maxDistance = 1.5f;
 
-	CharacterController controller ;
+	private CharacterController controller ;
 
 	[Command]
 	void CmdFire()
@@ -39,34 +40,52 @@ public class PlayerController : NetworkBehaviour {
 		{
 			return;
 		}
-
-		if (Input.GetKeyDown(KeyCode.Mouse0))
-		{
-			CmdFire();
-		}
-
 		Move ();
 	}
 
 	public override void OnStartLocalPlayer()
 	{
 		GetComponent<MeshRenderer>().material.color = Color.blue;
-		MainCameraController.GetInstance ().SetTarget (this.gameObject);
+		MainCameraController.GetInstance().SetTarget (this.gameObject);
 		controller = GetComponent<CharacterController> ();
 	}
 
-	private void Move(){
-		controller.transform.Rotate (0, Input.GetAxis ("Mouse X") *  sensitivity, 0);
-		if (controller.isGrounded) {
-			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-			moveDirection = transform.TransformDirection(moveDirection);
-			moveDirection *= speed;
-			if (Input.GetButton ("Jump")) {
-				moveDirection.y = jumpSpeed;
+	void FixedUpdate()
+	{
+		
+		if (Ship == null) {
+			var lm = LayerMask.GetMask("Interactable");
+			RaycastHit hit;
+			if (Physics.Raycast (transform.position, MainCameraController.GetInstance().GetCameraViewVector(), out hit, maxDistance, lm) && Input.GetKeyDown (KeyCode.E)) {
+				EventManager.TriggerEvent(EventType.PLAYER_REQUEST_SHIP_CONTROL, new PlayerShipControlInteractionEvent(gameObject, hit.collider.transform.parent.gameObject));// control is a child of a ship prefab
 			}
-
 		}
-		moveDirection.y -= gravity * Time.deltaTime;
-		controller.Move(moveDirection * Time.deltaTime);
 	}
+
+	private void Move(){
+		if (Ship != null) { //means he is captain
+			if(Input.GetKeyDown(KeyCode.Escape)){
+				EventManager.TriggerEvent (EventType.PLAYER_LEAVES_SHIP_CONTROL, new PlayerShipControlInteractionEvent (gameObject,Ship));
+			}
+		} else {
+			if (Input.GetKeyDown(KeyCode.Mouse0))
+			{
+				CmdFire();
+			}
+			controller.transform.Rotate (0, Input.GetAxis ("Mouse X") *  sensitivity, 0);
+			if (controller.isGrounded) {
+				moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+				moveDirection = transform.TransformDirection(moveDirection);
+				moveDirection *= speed;
+				if (Input.GetButton ("Jump")) {
+					moveDirection.y = jumpSpeed;
+				}
+
+			}
+			moveDirection.y -= gravity * Time.deltaTime;
+			controller.Move(moveDirection * Time.deltaTime);
+		}
+	}
+
+	public GameObject Ship {get;set;}
 }

@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33596979227226876}
   - component: {fileID: 65632626771067122}
   - component: {fileID: 23135917799621670}
+  - component: {fileID: 114152144301051290}
+  - component: {fileID: 114285570052121238}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Ship
@@ -41,9 +43,9 @@ GameObject:
   - component: {fileID: 65879383602046340}
   - component: {fileID: 23390677374320236}
   - component: {fileID: 114593029760229002}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: control
-  m_TagString: Untagged
+  m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,7 +63,7 @@ GameObject:
   - component: {fileID: 23740746474908464}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -252,8 +254,30 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 4, z: 2}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114152144301051290
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1665446783835746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcac542084b280d4eaa4924153d30cfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114285570052121238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1665446783835746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1b4af1162f24b64b8e7e6ca85dfb5f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114593029760229002
 MonoBehaviour:
   m_ObjectHideFlags: 1

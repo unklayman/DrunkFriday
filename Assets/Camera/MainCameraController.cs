@@ -24,4 +24,8 @@ public class MainCameraController {
 			camera.SetTarget(target);
 		}	
 	}
+
+	public Vector3 GetCameraViewVector(){
+		return camera.transform.TransformDirection (Vector3.forward);
+	}
 }

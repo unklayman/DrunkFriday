@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LookAtCamera : MonoBehaviour {
 	private GameObject target;
 	Vector3 offset;
-	private float maxDistance = 10f;
+	private float maxDistance = 8f;
 	float angleX = 0;
 
 	void Start() {
@@ -27,15 +28,6 @@ public class LookAtCamera : MonoBehaviour {
 
 		transform.position = target.transform.position - (rotation * offset);
 		transform.LookAt (target.transform);
-	}
-
-	void FixedUpdate()
-	{
-		var lm = LayerMask.GetMask("Interactable");
-			RaycastHit hit;
-			if (Physics.Raycast (transform.position, this.transform.TransformDirection(Vector3.forward), out hit, maxDistance, lm)) {
-				print("Found an interactable object - distance: " + hit.distance + ", object tag:" + hit.collider.tag);
-			}
 	}
 
 	public void SetTarget(GameObject target){
