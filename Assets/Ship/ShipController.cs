@@ -10,15 +10,7 @@ public class ShipController : MonoBehaviour {
 	//Axis movement
     public float MaxSpeed = 3f;
 	[Range(-1,1)]
-	public float Thrust 
-	{ 
-		get;
-		set
-		{ 
-			if (value > 1)	Thrust = 1;
-			if (value < -1)	Thrust = -1; 
-		}
-	}
+	public float Thrust;
 	public float ThrustDelta = 0.1f;
 	public float Acceleration = 20f;
 	public float Deceleration = 1f;
