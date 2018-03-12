@@ -5,8 +5,7 @@ using UnityEngine.Events;
 
 public class LookAtCamera : MonoBehaviour {
 	private GameObject target;
-	Vector3 offset;
-	private float maxDistance = 8f;
+	private Vector3 offset;
 	float angleX = 0;
 
 	void Start() {
@@ -19,12 +18,13 @@ public class LookAtCamera : MonoBehaviour {
 		}
 	
 		float desiredAngleY = target.transform.eulerAngles.y;
+		//float desiredAngleX = target.transform.eulerAngles.x;
 		var desiredAngleX = angleX - Input.GetAxis ("Mouse Y") * 2f;	
 		if(desiredAngleX < 54f && desiredAngleX > -90f){ //wtf is this values?  probably depends resulting offset position angle
 			angleX = desiredAngleX;	
 		}
 
-		Quaternion rotation = Quaternion.Euler (angleX, desiredAngleY, 0);
+		Quaternion rotation = Quaternion.Euler (desiredAngleX, desiredAngleY, 0);
 
 		transform.position = target.transform.position - (rotation * offset);
 		transform.LookAt (target.transform);
@@ -37,7 +37,7 @@ public class LookAtCamera : MonoBehaviour {
 		if (this.target != target) {
 			this.target = target;
 			if (this.target.tag == "Ship") {
-				this.offset = new Vector3 (0, -15.0f, 10);
+				this.offset = new Vector3 (0, -25.0f, 20);
 			}
 			if (this.target.tag == "Player") {
 				this.offset = new Vector3(0,-2.0f,3);

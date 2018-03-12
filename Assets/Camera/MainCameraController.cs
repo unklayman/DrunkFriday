@@ -28,4 +28,8 @@ public class MainCameraController {
 	public Vector3 GetCameraViewVector(){
 		return camera.transform.TransformDirection (Vector3.forward);
 	}
+
+	public Quaternion GetCameraRotation(){
+		return camera.gameObject.transform.rotation;
+	}
 }
