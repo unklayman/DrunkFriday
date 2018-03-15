@@ -34,25 +34,20 @@ public class PlayerController : NetworkBehaviour {
 		Destroy(bullet, 2.0f);
 	}
 
-	void Update()
-	{
-		if (!isLocalPlayer)
-		{
-			return;
-		}
-		Move ();
-	}
-
 	public override void OnStartLocalPlayer()
 	{
 		GetComponent<MeshRenderer>().material.color = Color.blue;
-		MainCameraController.GetInstance().SetTarget (this.gameObject);
+		MainCameraController.GetInstance().SetTargetFor<PlayerCamera>(this.gameObject);
 		controller = GetComponent<CharacterController> ();
 	}
 
 	void FixedUpdate()
 	{
-		
+		if (!isLocalPlayer)
+		{
+			return;
+		}
+		Move ();	
 		if (Ship == null) {
 			var lm = LayerMask.GetMask("Interactable");
 			RaycastHit hit;
@@ -72,7 +67,7 @@ public class PlayerController : NetworkBehaviour {
 			{
 				CmdFire();
 			}
-			controller.transform.Rotate (0, Input.GetAxis ("Mouse X") *  sensitivity, 0);
+			controller.transform.rotation = Quaternion.Euler (0, MainCameraController.GetInstance().GetCameraRotation().eulerAngles.y,0);
 			if (controller.isGrounded) {
 				moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 				moveDirection = transform.TransformDirection(moveDirection);

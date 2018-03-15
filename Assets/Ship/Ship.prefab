@@ -285,9 +285,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxSpeed: 2
   Thrust: 0
+  ThrustDelta: 0.1
   Acceleration: 50
   Deceleration: 1
   StopThreshold: 0.5
+  AngularSpeed: 0.01
 --- !u!114 &114285570052121238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -312,9 +314,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxSpeed: 10
   Thrust: 0
+  ThrustDelta: 0.1
   Acceleration: 2
   Deceleration: 1
   StopThreshold: 0.5
+  AngularSpeed: 0.01
 --- !u!135 &135139764999824500
 SphereCollider:
   m_ObjectHideFlags: 1

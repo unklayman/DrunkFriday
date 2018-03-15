@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class MainCameraController {
 
-	private LookAtCamera camera;
+	private BaseCamera[] cameras;
+	private BaseCamera activeCamera;
 
-	private MainCameraController(){
-		this.camera = Camera.main.GetComponent(typeof(LookAtCamera)) as LookAtCamera;
+	private MainCameraController() {
+		cameras = Camera.main.GetComponents<BaseCamera>();
 	}
 
 	private static MainCameraController instance;
@@ -19,17 +20,25 @@ public class MainCameraController {
 		return instance;
 	}
 
-	public void SetTarget(GameObject target){
-		if (camera != null && target!=null) {
-			camera.SetTarget(target);
-		}	
+	public void SetTargetFor<T> (GameObject gameObject) where T: BaseCamera{
+		DisableAllCameras ();
+		this.activeCamera = Camera.main.GetComponent(typeof(T)) as T;
+		activeCamera.enabled = true;
+		activeCamera.Target = gameObject;
 	}
 
 	public Vector3 GetCameraViewVector(){
-		return camera.transform.TransformDirection (Vector3.forward);
+		return activeCamera.transform.TransformDirection (Vector3.forward);
 	}
 
 	public Quaternion GetCameraRotation(){
-		return camera.gameObject.transform.rotation;
+		return activeCamera.gameObject.transform.rotation;
+	}
+
+	private void DisableAllCameras ()
+	{
+		for (var i = 0; i < cameras.Length; i++) {
+			cameras [i].enabled = false;
+		}
 	}
 }

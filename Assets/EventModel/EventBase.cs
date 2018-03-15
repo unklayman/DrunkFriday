@@ -1,9 +1,9 @@
 ﻿using System;
 
 
-	public abstract class EventBase
+public abstract class EventBase
+{
+	public EventBase ()
 	{
-		public EventBase ()
-		{
-		}
 	}
+}

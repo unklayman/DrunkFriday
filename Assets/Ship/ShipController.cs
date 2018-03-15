@@ -17,7 +17,10 @@ public class ShipController : MonoBehaviour {
 	public float StopThreshold = 0.5f;
 
 	//Angular movement
+	private float pitchSensitivity = 10;
 	public float AngularSpeed = 0.01f;
+	public float Pitch = 0;
+
 
     // Use this for initialization
     void Start () {
@@ -41,6 +44,12 @@ public class ShipController : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.S)) {
 			Thrust -= ThrustDelta;
 		}
+		if (Input.GetKeyDown (KeyCode.A)) {
+			Pitch -= pitchSensitivity;
+		}
+		if (Input.GetKeyDown (KeyCode.D)) {
+			Pitch += pitchSensitivity;
+		}
 
         rb.AddForce (transform.forward * Thrust * Acceleration , ForceMode.Acceleration);
 
@@ -48,8 +57,13 @@ public class ShipController : MonoBehaviour {
         {
             rb.velocity = rb.velocity.normalized * MaxSpeed;
         }
+
+		var desiredRotation = Quaternion.Euler(
+			MainCameraController.GetInstance().GetCameraRotation().eulerAngles.x - 30,
+			MainCameraController.GetInstance().GetCameraRotation().eulerAngles.y,
+			Pitch);
         
-		transform.rotation = Quaternion.Slerp (transform.rotation, MainCameraController.GetInstance().GetCameraRotation() , AngularSpeed);
+		transform.rotation = Quaternion.Slerp (transform.rotation,desiredRotation, AngularSpeed);
 		Decelerate ();
     }
 
