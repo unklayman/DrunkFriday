@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class PlayerController : NetworkBehaviour {
+
+	public Camera PlayerCamera;
+
 	public float speed = 6.0F;
 	public float jumpSpeed = 8.0F;
 	public float gravity = 20.0F;
@@ -14,6 +17,9 @@ public class PlayerController : NetworkBehaviour {
 	private float maxDistance = 1.5f;
 
 	private CharacterController controller ;
+
+	public float AngleY = 0;
+	public float AngleX = 0;
 
 	[Command]
 	void CmdFire()
@@ -37,7 +43,8 @@ public class PlayerController : NetworkBehaviour {
 	public override void OnStartLocalPlayer()
 	{
 		GetComponent<MeshRenderer>().material.color = Color.blue;
-		MainCameraController.GetInstance().SetTargetFor<PlayerCamera>(this.gameObject);
+		PlayerCamera = GetComponentInChildren<Camera>();
+		PlayerCamera.enabled = true;
 		controller = GetComponent<CharacterController> ();
 	}
 
@@ -51,7 +58,7 @@ public class PlayerController : NetworkBehaviour {
 		if (Ship == null) {
 			var lm = LayerMask.GetMask("Interactable");
 			RaycastHit hit;
-			if (Physics.Raycast (transform.position, MainCameraController.GetInstance().GetCameraViewVector(), out hit, maxDistance, lm) && Input.GetKeyDown (KeyCode.E)) {
+			if (Physics.Raycast (transform.position, PlayerCamera.transform.TransformDirection(Vector3.forward), out hit, maxDistance, lm) && Input.GetKeyDown (KeyCode.E)) {
 				EventManager.TriggerEvent(EventType.PLAYER_REQUEST_SHIP_CONTROL, new PlayerShipControlInteractionEvent(gameObject, hit.collider.transform.parent.gameObject));// control is a child of a ship prefab
 			}
 		}
@@ -67,7 +74,10 @@ public class PlayerController : NetworkBehaviour {
 			{
 				CmdFire();
 			}
-			controller.transform.rotation = Quaternion.Euler (0, MainCameraController.GetInstance().GetCameraRotation().eulerAngles.y,0);
+			//controller.transform.rotation = Quaternion.Euler (0, MainCameraController.GetInstance().GetCameraRotation().eulerAngles.y,0);
+			AngleY += Input.GetAxis ("Mouse X") * 2f;
+			AngleX -= Input.GetAxis ("Mouse Y") * 2f;
+			transform.rotation = Quaternion.Euler (AngleX, AngleY * 2, 0);
 			if (controller.isGrounded) {
 				moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 				moveDirection = transform.TransformDirection(moveDirection);

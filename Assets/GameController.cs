@@ -27,8 +27,8 @@ public class GameController : MonoBehaviour {
 		}
 		shipController.Driver = ev.Player;
 		playerController.Ship = ev.Ship;
-
-		MainCameraController.GetInstance ().SetTargetFor<ShipCamera> (ev.Ship);
+		playerController.PlayerCamera.enabled = false;
+		shipController.ShipCamera.enabled = true;
 	}
 
 	private void PlayerLeavesShipControl(EventBase e){
@@ -47,6 +47,7 @@ public class GameController : MonoBehaviour {
 
 		shipController.Driver = null;
 		playerController.Ship = null;
-		MainCameraController.GetInstance ().SetTargetFor<PlayerCamera> (ev.Player);
+		playerController.PlayerCamera.enabled = true;
+		shipController.ShipCamera.enabled = false;
 	}
 }

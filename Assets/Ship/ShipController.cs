@@ -18,13 +18,18 @@ public class ShipController : MonoBehaviour {
 
 	//Angular movement
 	private float pitchSensitivity = 10;
+	private float angleX = 0;
+	private float angleY = 0;
 	public float AngularSpeed = 0.01f;
 	public float Pitch = 0;
 
 
+	public Camera ShipCamera;
+
     // Use this for initialization
     void Start () {
         rb = gameObject.GetComponent<Rigidbody> ();
+		ShipCamera = GetComponentInChildren<Camera>();
     }
     
     // Update is called once per frame
@@ -58,12 +63,10 @@ public class ShipController : MonoBehaviour {
             rb.velocity = rb.velocity.normalized * MaxSpeed;
         }
 
-		var desiredRotation = Quaternion.Euler(
-			MainCameraController.GetInstance().GetCameraRotation().eulerAngles.x - 30,
-			MainCameraController.GetInstance().GetCameraRotation().eulerAngles.y,
-			Pitch);
+		angleY += Input.GetAxis ("Mouse X") * 2f;
+		angleX -= Input.GetAxis ("Mouse Y") * 2f;
         
-		transform.rotation = Quaternion.Slerp (transform.rotation,desiredRotation, AngularSpeed);
+		transform.rotation = Quaternion.Slerp (transform.rotation,Quaternion.Euler(angleX,angleY,Pitch), AngularSpeed);
 		Decelerate ();
     }
 
