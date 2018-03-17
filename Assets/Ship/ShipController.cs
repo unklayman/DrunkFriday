@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ShipController : MonoBehaviour {
+public class ShipController : NetworkBehaviour {
 
 	public PlayerController Driver {get;set;}
 	public PlayerController Shooter {get;set;}
