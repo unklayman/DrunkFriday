@@ -1,3 +1,3 @@
 ﻿public interface IDamageable {
-	void DoDamage(float amount);
+	void DoDamage(int amount);
 }

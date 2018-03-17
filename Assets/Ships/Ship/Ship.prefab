@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 23135917799621670}
   - component: {fileID: 114152144301051290}
   - component: {fileID: 54988062001102688}
+  - component: {fileID: 114218579711916736}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Ship
@@ -472,6 +473,17 @@ MonoBehaviour:
   Pitch: 0
   GunPrefab: {fileID: 1006165622440322, guid: 8eb598b2069c9784a81d572358d484a2, type: 2}
   TurretAttachPosition: {fileID: 1399973132020008}
+--- !u!114 &114218579711916736
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1665446783835746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4878c4f4f9e3f1e478640bd79c86c862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135139764999824500
 SphereCollider:
   m_ObjectHideFlags: 1

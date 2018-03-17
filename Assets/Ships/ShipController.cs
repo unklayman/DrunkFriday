@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ShipController : NetworkBehaviour, IDamageable {
+public class ShipController : NetworkBehaviour {
 
 	public PlayerController Driver {get;set;}
 	public PlayerController Shooter {get;set;}
@@ -46,6 +46,7 @@ public class ShipController : NetworkBehaviour, IDamageable {
 				TurretAttachPosition.transform.position,
 				Quaternion.Euler(0,0,0));
 			GunController = gun.GetComponentInChildren<GunController> ();
+			GunController.Ship = this;
 		}
     }
     
@@ -105,16 +106,17 @@ public class ShipController : NetworkBehaviour, IDamageable {
         }
     }
 
-	#region IDamageable implementation
-
-	public void DoDamage (float amount)
-	{
+	void OnDestroy(){
+		if (Shooter != null) {
+			Destroy (Shooter.gameObject);
+		}
+		if (Driver != null) {
+			Destroy (Driver.gameObject);
+		}
 		if (GunController != null) {
 			Destroy (GunController.gameObject);
 		}
 		Destroy (gameObject);
 	}
-
-	#endregion
 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GunController : NetworkBehaviour , IDamageable {
+public class GunController : NetworkBehaviour {
 
 	public Camera GunCamera;
 	public float AngularSpeed = 0.01f;
@@ -18,9 +18,14 @@ public class GunController : NetworkBehaviour , IDamageable {
 	public GameObject CannonBallPrefab;
 
 	// Use this for initialization
-	void Awake () {
-		GunCamera = GetComponentInChildren<Camera> ();
-		Ship = GetComponentInParent<ShipController> ();
+	void Start () {
+		if (GunCamera == null) {
+			GunCamera = GetComponentInChildren<Camera> ();
+		}
+		if (Ship == null) {
+			Ship = GetComponentInParent<ShipController> ();
+		}
+		transform.parent = Ship.transform;
 	}
 
 	[Command]
@@ -59,13 +64,4 @@ public class GunController : NetworkBehaviour , IDamageable {
 
 		transform.rotation = Quaternion.Slerp (transform.rotation,Quaternion.Euler(angleX,angleY,0), AngularSpeed);
 	}
-
-	#region IDamageable implementation
-
-	public void DoDamage (float amount)
-	{
-		Destroy (gameObject);
-	}
-
-	#endregion
 }

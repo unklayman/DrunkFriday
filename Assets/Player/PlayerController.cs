@@ -33,7 +33,7 @@ public class PlayerController : NetworkBehaviour {
 			bulletSpawn.rotation);
 
 		// Add velocity to the bullet
-		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 12;
 
 		// Spawn the bullet on the Clients
 		NetworkServer.Spawn(bullet);
@@ -79,7 +79,6 @@ public class PlayerController : NetworkBehaviour {
 			{
 				CmdFire();
 			}
-			//controller.transform.rotation = Quaternion.Euler (0, MainCameraController.GetInstance().GetCameraRotation().eulerAngles.y,0);
 			AngleY += Input.GetAxis ("Mouse X") * 2f;
 			AngleX -= Input.GetAxis ("Mouse Y") * 2f;
 			transform.rotation = Quaternion.Euler (AngleX, AngleY * 2, 0);

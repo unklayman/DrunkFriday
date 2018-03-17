@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23401513394966358}
   - component: {fileID: 114344153157794732}
   - component: {fileID: 114741906329507606}
+  - component: {fileID: 114912569227318500}
   m_Layer: 0
   m_Name: ShipGun
   m_TagString: Ship
@@ -303,6 +304,17 @@ MonoBehaviour:
     i15: 162
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114912569227318500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1006165622440322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4878c4f4f9e3f1e478640bd79c86c862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135581397521492004
 SphereCollider:
   m_ObjectHideFlags: 1

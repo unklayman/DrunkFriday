@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114412484793538152}
   - component: {fileID: 114671460041122164}
   - component: {fileID: 54902325893254444}
+  - component: {fileID: 114953936774055024}
   m_Layer: 0
   m_Name: DummyShip
   m_TagString: Ship
@@ -194,5 +195,16 @@ MonoBehaviour:
   StopThreshold: 0.5
   AngularSpeed: 0.01
   Pitch: 0
-  GunPrefab: {fileID: 0}
+  GunPrefab: {fileID: 1338716581088202, guid: e56296613e7479f4d99528e596c4317d, type: 2}
   TurretAttachPosition: {fileID: 1699938140783080}
+--- !u!114 &114953936774055024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1167981115689036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4878c4f4f9e3f1e478640bd79c86c862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

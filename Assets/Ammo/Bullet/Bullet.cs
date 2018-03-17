@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : Projectile {
 
-	void OnCollisionEnter(Collision collision) {
-		var hit = collision.gameObject;
-		var health = hit.GetComponent<Health>();
-		if (health != null)
-		{
-			health.TakeDamage(10);
-		}
+	private int damage = 50;
 
-		Destroy(gameObject);
+	#region implemented abstract members of Projectile
+
+	protected override int GetDamageAmount ()
+	{
+		return damage;
 	}
+
+	#endregion
+
+
 }
