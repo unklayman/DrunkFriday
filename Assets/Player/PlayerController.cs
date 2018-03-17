@@ -21,6 +21,8 @@ public class PlayerController : NetworkBehaviour {
 	public float AngleY = 0;
 	public float AngleX = 0;
 
+	public ShipController Ship {get;set;}
+
 	[Command]
 	void CmdFire()
 	{
@@ -59,17 +61,20 @@ public class PlayerController : NetworkBehaviour {
 			var lm = LayerMask.GetMask("Interactable");
 			RaycastHit hit;
 			if (Physics.Raycast (transform.position, PlayerCamera.transform.TransformDirection(Vector3.forward), out hit, maxDistance, lm) && Input.GetKeyDown (KeyCode.E)) {
-				EventManager.TriggerEvent(EventType.PLAYER_REQUEST_SHIP_CONTROL, new PlayerShipControlInteractionEvent(gameObject, hit.collider.transform.parent.gameObject));// control is a child of a ship prefab
+				var target = hit.collider.gameObject;
+				if (target.name.Equals ("ShipControl")) {
+					GameController.PlayerShipInteraction (this, target.GetComponentInParent<ShipController> (), InteractionType.PlayerTakesShipControl);
+				}
+				if (target.name.Equals ("GunControl")) {
+					GameController.PlayerShipInteraction (this, target.GetComponentInParent<ShipController> (), InteractionType.PlayerTakesShipGunsControl);
+				}
+
 			}
 		}
 	}
 
 	private void Move(){
-		if (Ship != null) { //means he is captain
-			if(Input.GetKeyDown(KeyCode.Escape)){
-				EventManager.TriggerEvent (EventType.PLAYER_LEAVES_SHIP_CONTROL, new PlayerShipControlInteractionEvent (gameObject,Ship));
-			}
-		} else {
+		if (Ship == null) {
 			if (Input.GetKeyDown(KeyCode.Mouse0))
 			{
 				CmdFire();
@@ -92,5 +97,5 @@ public class PlayerController : NetworkBehaviour {
 		}
 	}
 
-	public GameObject Ship {get;set;}
+
 }

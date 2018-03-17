@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlayerShipControlInteractionEvent : EventBase
 {
-	public GameObject Ship {get {return ship;}}
+	public GameObject ShipPart {get {return shipPart;}}
 	public GameObject Player {get {return player;}}
 
 	private GameObject player;
-	private GameObject ship;
+	private GameObject shipPart;
 
-	public PlayerShipControlInteractionEvent (GameObject player,GameObject ship)
+	public PlayerShipControlInteractionEvent (GameObject player,GameObject shipPart)
 	{
 		this.player = player;
-		this.ship = ship;
+		this.shipPart = shipPart;
 	}
 }

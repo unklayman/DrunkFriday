@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class ShipController : MonoBehaviour {
 
-    public GameObject Driver {get;set;}
-    private Rigidbody rb;
+	public PlayerController Driver {get;set;}
+	public PlayerController Shooter {get;set;}
+	public GunController GunController { get; set;}
+
+	public Camera ShipCamera;
+	private Rigidbody rb;
 
 	//Axis movement
     public float MaxSpeed = 3f;
@@ -24,12 +28,12 @@ public class ShipController : MonoBehaviour {
 	public float Pitch = 0;
 
 
-	public Camera ShipCamera;
 
     // Use this for initialization
     void Start () {
         rb = gameObject.GetComponent<Rigidbody> ();
 		ShipCamera = GetComponentInChildren<Camera>();
+		GunController = GetComponentInChildren<GunController> ();
     }
     
     // Update is called once per frame
@@ -42,7 +46,9 @@ public class ShipController : MonoBehaviour {
 	  	if (Driver == null) {
         	return;
       	}
-
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			GameController.PlayerShipInteraction (Driver,this,InteractionType.PlayerReleasesShipControl);
+		}
 		if (Input.GetKeyDown (KeyCode.W)) {
 			Thrust += ThrustDelta;
 		}
