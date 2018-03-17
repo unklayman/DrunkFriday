@@ -27,13 +27,23 @@ public class ShipController : MonoBehaviour {
 	public float AngularSpeed = 0.01f;
 	public float Pitch = 0;
 
+	//prefabs
+	public GameObject GunPrefab;
+
+	//space anchors
+	public GameObject TurrenAttachPosition;
 
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         rb = gameObject.GetComponent<Rigidbody> ();
 		ShipCamera = GetComponentInChildren<Camera>();
-		GunController = GetComponentInChildren<GunController> ();
+
+		var gun = (GameObject)Instantiate (
+			GunPrefab,
+			TurrenAttachPosition.transform.position,
+			Quaternion.Euler(0,0,0));
+		GunController = gun.GetComponentInChildren<GunController> ();
     }
     
     // Update is called once per frame

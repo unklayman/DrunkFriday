@@ -5,7 +5,11 @@ licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ShipCamera: {instanceID: 0}
+  - GunPrefab: {fileID: 1006165622440322, guid: 8eb598b2069c9784a81d572358d484a2,
+      type: 2}
+  - TurrenAttachPosition: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
