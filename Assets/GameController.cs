@@ -31,6 +31,10 @@ public class GameController : MonoBehaviour {
 			player.PlayerCamera.enabled = true;
 			ship.GunController.GunCamera.enabled = false;
 		}
+	}
 
+	public static void Damage(GameObject gameObject, float amount){
+		var d = gameObject.GetComponent<IDamageable> ();
+		d.DoDamage (amount);
 	}
 }

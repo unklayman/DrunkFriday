@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ShipController : NetworkBehaviour {
+public class ShipController : NetworkBehaviour, IDamageable {
 
 	public PlayerController Driver {get;set;}
 	public PlayerController Shooter {get;set;}
@@ -32,7 +32,7 @@ public class ShipController : NetworkBehaviour {
 	public GameObject GunPrefab;
 
 	//space anchors
-	public GameObject TurrenAttachPosition;
+	public GameObject TurretAttachPosition;
 
 
     // Use this for initialization
@@ -40,11 +40,13 @@ public class ShipController : NetworkBehaviour {
         rb = gameObject.GetComponent<Rigidbody> ();
 		ShipCamera = GetComponentInChildren<Camera>();
 
-		var gun = (GameObject)Instantiate (
-			GunPrefab,
-			TurrenAttachPosition.transform.position,
-			Quaternion.Euler(0,0,0));
-		GunController = gun.GetComponentInChildren<GunController> ();
+		if (GunPrefab != null) {
+			var gun = (GameObject)Instantiate (
+				GunPrefab,
+				TurretAttachPosition.transform.position,
+				Quaternion.Euler(0,0,0));
+			GunController = gun.GetComponentInChildren<GunController> ();
+		}
     }
     
     // Update is called once per frame
@@ -102,5 +104,17 @@ public class ShipController : NetworkBehaviour {
             rb.velocity = Vector3.zero;
         }
     }
+
+	#region IDamageable implementation
+
+	public void DoDamage (float amount)
+	{
+		if (GunController != null) {
+			Destroy (GunController.gameObject);
+		}
+		Destroy (gameObject);
+	}
+
+	#endregion
 }
 

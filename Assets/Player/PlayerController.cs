@@ -96,6 +96,4 @@ public class PlayerController : NetworkBehaviour {
 			controller.Move(moveDirection * Time.deltaTime);
 		}
 	}
-
-
 }

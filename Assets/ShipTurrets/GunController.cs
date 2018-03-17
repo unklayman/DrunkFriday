@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GunController : NetworkBehaviour {
+public class GunController : NetworkBehaviour , IDamageable {
 
 	public Camera GunCamera;
 	public float AngularSpeed = 0.01f;
@@ -59,4 +59,13 @@ public class GunController : NetworkBehaviour {
 
 		transform.rotation = Quaternion.Slerp (transform.rotation,Quaternion.Euler(angleX,angleY,0), AngularSpeed);
 	}
+
+	#region IDamageable implementation
+
+	public void DoDamage (float amount)
+	{
+		Destroy (gameObject);
+	}
+
+	#endregion
 }
