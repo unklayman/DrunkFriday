@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114215286655161636}
   - component: {fileID: 114514291077676496}
   - component: {fileID: 54530031963797418}
+  - component: {fileID: 114452344200653702}
   m_Layer: 0
   m_Name: ShipGunDummy
   m_TagString: Ship
@@ -145,6 +146,17 @@ MonoBehaviour:
     i15: 125
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114452344200653702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1338716581088202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4878c4f4f9e3f1e478640bd79c86c862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114514291077676496
 MonoBehaviour:
   m_ObjectHideFlags: 1

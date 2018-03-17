@@ -25,7 +25,7 @@ public class GunController : NetworkBehaviour {
 		if (Ship == null) {
 			Ship = GetComponentInParent<ShipController> ();
 		}
-		transform.parent = Ship.transform;
+		Physics.IgnoreCollision (Ship.gameObject.GetComponent<Collider> (), GetComponent<Collider> ());
 	}
 
 	[Command]
@@ -49,6 +49,9 @@ public class GunController : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		if (Ship != null) {
+			this.transform.position = Ship.TurretAttachPosition.transform.position;
+		}
 		if (Shooter == null) {
 			return;
 		}

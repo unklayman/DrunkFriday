@@ -18,7 +18,7 @@ public class ShipController : NetworkBehaviour {
 	public float Thrust;
 	public float ThrustDelta = 0.1f;
 	public float Acceleration = 20f;
-	public float Deceleration = 1f;
+	public float Deceleration = 2f;
 	public float StopThreshold = 0.5f;
 
 	//Angular movement
