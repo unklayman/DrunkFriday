@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour {
 			player.Ship = ship;
 			player.PlayerCamera.enabled = false;
 			ship.ShipCamera.enabled = true;
+
+			//player.transform.parent = ship.transform;
 		}
 		if (type.Equals (InteractionType.PlayerReleasesShipControl)) {
 			ship.Driver = null;

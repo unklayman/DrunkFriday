@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ShipController : NetworkBehaviour {
+public class ShipController : NetworkBehaviour
+{
 
-	public PlayerController Driver {get;set;}
-	public PlayerController Shooter {get;set;}
-	public GunController GunController { get; set;}
+	public PlayerController Driver { get; set; }
+
+	public PlayerController Shooter { get; set; }
+
+	public GunController GunController { get; set; }
 
 	public Camera ShipCamera;
 	private Rigidbody rb;
 
 	//Axis movement
-    public float MaxSpeed = 3f;
-	[Range(-1,1)]
+	public float MaxSpeed = 3f;
+	[Range (-1, 1)]
 	public float Thrust;
 	public float ThrustDelta = 0.1f;
 	public float Acceleration = 20f;
@@ -28,6 +31,12 @@ public class ShipController : NetworkBehaviour {
 	public float AngularSpeed = 0.01f;
 	public float Pitch = 0;
 
+	private float angularThreshold = 0.01f;
+
+	// Debug properties
+	public float angularVelocityY;
+	public float currentSpeed;
+
 	//prefabs
 	public GameObject GunPrefab;
 
@@ -35,37 +44,42 @@ public class ShipController : NetworkBehaviour {
 	public GameObject TurretAttachPosition;
 
 
-    // Use this for initialization
-    void Awake () {
-        rb = gameObject.GetComponent<Rigidbody> ();
-		ShipCamera = GetComponentInChildren<Camera>();
+	// Use this for initialization
+	void Start ()
+	{
+		rb = gameObject.GetComponent<Rigidbody> ();
+		ShipCamera = GetComponentInChildren<Camera> ();
 
 		if (GunPrefab != null) {
 			var gun = (GameObject)Instantiate (
-				GunPrefab,
-				TurretAttachPosition.transform.position,
-				Quaternion.Euler(0,0,0));
+				          GunPrefab,
+				          TurretAttachPosition.transform.position,
+				          Quaternion.Euler (0, 0, 0));
 			GunController = gun.GetComponentInChildren<GunController> ();
 			GunController.Ship = this;
 		}
-    }
+
+		// save default rotation
+		angleX = this.transform.rotation.eulerAngles.x;
+		angleY = this.transform.rotation.eulerAngles.y;
+	}
     
-    // Update is called once per frame
-    void FixedUpdate () {
-		if(rb.velocity.magnitude > MaxSpeed)
-		{
+	// Update is called once per frame
+	void FixedUpdate ()
+	{
+		if (rb.velocity.magnitude > MaxSpeed) {
 			rb.velocity = rb.velocity.normalized * MaxSpeed;
 		}
-        Move ();
-    }
+		Move ();
+	}
 
-    void Move ()
-    {
+	void Move ()
+	{
 		if (Driver == null) {
-        	return;
-      	}
-		if(Input.GetKeyDown(KeyCode.Escape)){
-			GameController.PlayerShipInteraction (Driver,this,InteractionType.PlayerReleasesShipControl);
+			return;
+		}
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			GameController.PlayerShipInteraction (Driver, this, InteractionType.PlayerReleasesShipControl);
 		}
 		if (Input.GetKeyDown (KeyCode.W)) {
 			Thrust += ThrustDelta;
@@ -88,11 +102,17 @@ public class ShipController : NetworkBehaviour {
 
 		angleY += Input.GetAxis ("Mouse X") * 2f;
 		angleX -= Input.GetAxis ("Mouse Y") * 2f;
-        
-		transform.rotation = Quaternion.Slerp (transform.rotation,Quaternion.Euler(angleX,angleY,Pitch), AngularSpeed);
-    }
 
-	void OnDestroy(){
+		currentSpeed = rb.velocity.magnitude;
+
+		var ratioSpeed = Mathf.Abs (currentSpeed / MaxSpeed);
+		if (ratioSpeed > angularThreshold) {
+			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (angleX, angleY, Pitch), AngularSpeed);
+		}
+	}
+
+	void OnDestroy ()
+	{
 		if (Shooter != null) {
 			Destroy (Shooter.gameObject);
 		}
