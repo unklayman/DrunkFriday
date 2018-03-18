@@ -1956,6 +1956,21 @@ Prefab:
       propertyPath: TurretAttachPosition
       value: 
       objectReference: {fileID: 591251248}
+    - target: {fileID: 114152144301051290, guid: 1d8c6bb5385eace45983ac17e56b8338,
+        type: 2}
+      propertyPath: GunPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114152144301051290, guid: 1d8c6bb5385eace45983ac17e56b8338,
+        type: 2}
+      propertyPath: StopThreshold
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54988062001102688, guid: 1d8c6bb5385eace45983ac17e56b8338,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d8c6bb5385eace45983ac17e56b8338, type: 2}
   m_IsPrefabParent: 0

@@ -19,7 +19,7 @@ public class ShipController : NetworkBehaviour {
 	public float ThrustDelta = 0.1f;
 	public float Acceleration = 20f;
 	public float Deceleration = 2f;
-	public float StopThreshold = 0.5f;
+	public float StopThreshold = 0.1f;
 
 	//Angular movement
 	private float pitchSensitivity = 10;
@@ -52,12 +52,16 @@ public class ShipController : NetworkBehaviour {
     
     // Update is called once per frame
     void FixedUpdate () {
+		if(rb.velocity.magnitude > MaxSpeed)
+		{
+			rb.velocity = rb.velocity.normalized * MaxSpeed;
+		}
         Move ();
     }
 
     void Move ()
     {
-	  	if (Driver == null) {
+		if (Driver == null) {
         	return;
       	}
 		if(Input.GetKeyDown(KeyCode.Escape)){
@@ -76,34 +80,16 @@ public class ShipController : NetworkBehaviour {
 			Pitch += pitchSensitivity;
 		}
 
-        rb.AddForce (transform.forward * Thrust * Acceleration , ForceMode.Acceleration);
-
-        if(rb.velocity.magnitude > MaxSpeed)
-        {
-            rb.velocity = rb.velocity.normalized * MaxSpeed;
-        }
+		if (Mathf.Abs (Thrust) > StopThreshold) {
+			rb.AddForce (transform.forward * Thrust * Acceleration, ForceMode.Acceleration);
+		} else {
+			rb.AddForce (rb.velocity * -Deceleration, ForceMode.Acceleration);
+		}
 
 		angleY += Input.GetAxis ("Mouse X") * 2f;
 		angleX -= Input.GetAxis ("Mouse Y") * 2f;
         
 		transform.rotation = Quaternion.Slerp (transform.rotation,Quaternion.Euler(angleX,angleY,Pitch), AngularSpeed);
-		Decelerate ();
-    }
-
-    void Decelerate ()
-    {
-        DecelerateMovement ();
-    }
-
-    void DecelerateMovement ()
-    {
-		if (rb.velocity.magnitude > StopThreshold) {
-			rb.AddForce (Vector3.one * -Deceleration, ForceMode.Acceleration);
-		} else if (rb.velocity.magnitude < -StopThreshold) {
-			rb.AddForce (Vector3.one * Deceleration, ForceMode.Acceleration);
-        } else {
-            rb.velocity = Vector3.zero;
-        }
     }
 
 	void OnDestroy(){
