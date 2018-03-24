@@ -58,9 +58,11 @@ public class PlayerController : NetworkBehaviour {
 		}
 		Move ();	
 		if (Ship == null) {
-			var lm = LayerMask.GetMask("Interactable");
+			var lm = LayerMask.GetMask ("Interactable");
 			RaycastHit hit;
-			if (Physics.Raycast (transform.position, PlayerCamera.transform.TransformDirection(Vector3.forward), out hit, maxDistance, lm) && Input.GetKeyDown (KeyCode.E)) {
+			if (Input.GetKeyDown (KeyCode.E) &&
+			    Physics.Raycast (transform.position, PlayerCamera.transform.TransformDirection (Vector3.forward), out hit, maxDistance, lm)) {
+
 				var target = hit.collider.gameObject;
 				if (target.name.Equals ("ShipControl")) {
 					GameController.PlayerShipInteraction (this, target.GetComponentInParent<ShipController> (), InteractionType.PlayerTakesShipControl);
@@ -68,7 +70,6 @@ public class PlayerController : NetworkBehaviour {
 				if (target.name.Equals ("GunControl")) {
 					GameController.PlayerShipInteraction (this, target.GetComponentInParent<ShipController> (), InteractionType.PlayerTakesShipGunsControl);
 				}
-
 			}
 		}
 	}

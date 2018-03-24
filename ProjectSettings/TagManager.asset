@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coin
   - Ship
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

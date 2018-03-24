@@ -33,9 +33,17 @@ public class ShipController : NetworkBehaviour
 
 	private float angularThreshold = 0.01f;
 
+	// Drift parameters
+	private float userPitch = 0.0f;
+	private float driftPitch = 30f;
+
 	// Debug properties
 	public float angularVelocityY;
 	public float currentSpeed;
+	public float localForward;
+	public float localRight;
+	public float localPitch;
+	public float InputX;
 
 	//prefabs
 	public GameObject GunPrefab;
@@ -88,10 +96,12 @@ public class ShipController : NetworkBehaviour
 			Thrust -= ThrustDelta;
 		}
 		if (Input.GetKeyDown (KeyCode.A)) {
-			Pitch -= pitchSensitivity;
+			userPitch -= pitchSensitivity;
+			//Pitch -= pitchSensitivity;
 		}
 		if (Input.GetKeyDown (KeyCode.D)) {
-			Pitch += pitchSensitivity;
+			userPitch += pitchSensitivity;
+			//Pitch += pitchSensitivity;
 		}
 
 		if (Mathf.Abs (Thrust) > StopThreshold) {
@@ -102,10 +112,34 @@ public class ShipController : NetworkBehaviour
 
 		angleY += Input.GetAxis ("Mouse X") * 2f;
 		angleX -= Input.GetAxis ("Mouse Y") * 2f;
+		InputX = Input.GetAxis ("Mouse X");
 
 		currentSpeed = rb.velocity.magnitude;
 
+
+		// z - forward
+		// x - right
+		// y - top
+
+		var relativeVelocity = transform.InverseTransformDirection (rb.velocity);
+
+		// debug info
+		localForward = relativeVelocity.z;
+		localRight = relativeVelocity.x;
+
+
+
+
+		if (Mathf.Abs(relativeVelocity.z) > 0.001f) {
+			var changedDriftPitch = (relativeVelocity.x / relativeVelocity.z) * driftPitch;
+
+			Pitch = userPitch + changedDriftPitch;
+
+			localPitch = changedDriftPitch;
+		}
+
 		var ratioSpeed = Mathf.Abs (currentSpeed / MaxSpeed);
+
 		if (ratioSpeed > angularThreshold) {
 			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (angleX, angleY, Pitch), AngularSpeed);
 		}

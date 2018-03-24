@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameController : MonoBehaviour {
 	
 	public static void PlayerShipInteraction(PlayerController player,ShipController ship,InteractionType type){
@@ -32,6 +33,23 @@ public class GameController : MonoBehaviour {
 			player.Ship = null;
 			player.PlayerCamera.enabled = true;
 			ship.GunController.GunCamera.enabled = false;
+		}
+
+		if (type.Equals (InteractionType.PlayerLeaveAShip)) {
+			if (player.transform.parent == null) {
+				return;
+			}
+
+			var playerCC = player.gameObject.GetComponentInChildren<CharacterController> ();
+			if (playerCC == null) {
+				return;
+			}
+
+
+			playerCC.enabled = true;
+			player.transform.parent = null;
+
+			//player.transform.parent = null;
 		}
 	}
 }

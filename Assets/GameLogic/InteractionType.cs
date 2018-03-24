@@ -8,4 +8,8 @@ public enum InteractionType : byte {
 	PlayerReleasesShipControl,
 	PlayerTakesShipGunsControl,
 	PlayerReleasesShipGunsControls,
+
+
+	PlayerStayOnShip,
+	PlayerLeaveAShip
 }
