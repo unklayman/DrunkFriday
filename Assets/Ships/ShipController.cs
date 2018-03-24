@@ -83,39 +83,36 @@ public class ShipController : NetworkBehaviour
 
 	void Move ()
 	{
-		if (Driver == null) {
-			return;
+		if (Driver != null) {
+			if (Input.GetKeyDown (KeyCode.Escape)) {
+				GameController.PlayerShipInteraction (Driver, this, InteractionType.PlayerReleasesShipControl);
+			}
+			if (Input.GetKeyDown (KeyCode.W)) {
+				Thrust += ThrustDelta;
+			}
+			if (Input.GetKeyDown (KeyCode.S)) {
+				Thrust -= ThrustDelta;
+			}
+			if (Input.GetKeyDown (KeyCode.A)) {
+				userPitch -= pitchSensitivity;
+				//Pitch -= pitchSensitivity;
+			}
+			if (Input.GetKeyDown (KeyCode.D)) {
+				userPitch += pitchSensitivity;
+				//Pitch += pitchSensitivity;
+			}
+			angleY += Input.GetAxis ("Mouse X") * 2f;
+			angleX -= Input.GetAxis ("Mouse Y") * 2f;
+			InputX = Input.GetAxis ("Mouse X");
 		}
-		if (Input.GetKeyDown (KeyCode.Escape)) {
-			GameController.PlayerShipInteraction (Driver, this, InteractionType.PlayerReleasesShipControl);
-		}
-		if (Input.GetKeyDown (KeyCode.W)) {
-			Thrust += ThrustDelta;
-		}
-		if (Input.GetKeyDown (KeyCode.S)) {
-			Thrust -= ThrustDelta;
-		}
-		if (Input.GetKeyDown (KeyCode.A)) {
-			userPitch -= pitchSensitivity;
-			//Pitch -= pitchSensitivity;
-		}
-		if (Input.GetKeyDown (KeyCode.D)) {
-			userPitch += pitchSensitivity;
-			//Pitch += pitchSensitivity;
-		}
+
 
 		if (Mathf.Abs (Thrust) > StopThreshold) {
 			rb.AddForce (transform.forward * Thrust * Acceleration, ForceMode.Acceleration);
 		} else {
 			rb.AddForce (rb.velocity * -Deceleration, ForceMode.Acceleration);
 		}
-
-		angleY += Input.GetAxis ("Mouse X") * 2f;
-		angleX -= Input.GetAxis ("Mouse Y") * 2f;
-		InputX = Input.GetAxis ("Mouse X");
-
 		currentSpeed = rb.velocity.magnitude;
-
 
 		// z - forward
 		// x - right

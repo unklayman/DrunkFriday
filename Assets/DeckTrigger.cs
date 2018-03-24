@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 
 public class DeckTrigger : MonoBehaviour {
@@ -16,26 +17,24 @@ public class DeckTrigger : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider collider) {
-		var player = collider.gameObject.GetComponent<PlayerController> ();
+		var player = collider.gameObject.GetComponent<ThirdPersonUserControl> ();
 
 		if (player == null) {
 			return;
 		}
 
 		var ship = GetComponentInParent<ShipController> ();
-
-		GameController.PlayerShipInteraction (player, ship, InteractionType.PlayerStayOnShip);
+		player.transform.parent = ship.gameObject.transform;
 	}
 
 	void OnTriggerExit(Collider collider) {
-		var player = collider.gameObject.GetComponent<PlayerController> ();
+		var player = collider.gameObject.GetComponent<ThirdPersonUserControl> ();
 
 		if (player == null) {
 			return;
 		}
 
 		var ship = GetComponentInParent<ShipController> ();
-
-		GameController.PlayerShipInteraction (player, ship, InteractionType.PlayerLeaveAShip);
+		player.transform.parent = null;
 	}
 }

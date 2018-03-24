@@ -11,8 +11,6 @@ public class GameController : MonoBehaviour {
 			player.Ship = ship;
 			player.PlayerCamera.enabled = false;
 			ship.ShipCamera.enabled = true;
-
-			//player.transform.parent = ship.transform;
 		}
 		if (type.Equals (InteractionType.PlayerReleasesShipControl)) {
 			ship.Driver = null;
@@ -33,23 +31,6 @@ public class GameController : MonoBehaviour {
 			player.Ship = null;
 			player.PlayerCamera.enabled = true;
 			ship.GunController.GunCamera.enabled = false;
-		}
-
-		if (type.Equals (InteractionType.PlayerLeaveAShip)) {
-			if (player.transform.parent == null) {
-				return;
-			}
-
-			var playerCC = player.gameObject.GetComponentInChildren<CharacterController> ();
-			if (playerCC == null) {
-				return;
-			}
-
-
-			playerCC.enabled = true;
-			player.transform.parent = null;
-
-			//player.transform.parent = null;
 		}
 	}
 }
