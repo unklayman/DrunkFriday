@@ -39,9 +39,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (v < 0)
 				v = 0;
 			bool crouch = Input.GetKey(KeyCode.LeftControl);
-
 			m_Move = v * gameObject.transform.forward + h * gameObject.transform.right;
-		
+					
             // pass all parameters to the character control script
             m_Character.Move(m_Move, crouch, m_Jump);
             m_Jump = false;

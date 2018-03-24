@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Camera))]
 public class ShipController : NetworkBehaviour
 {
 
