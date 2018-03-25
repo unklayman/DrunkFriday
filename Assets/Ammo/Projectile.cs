@@ -6,7 +6,7 @@ public abstract class Projectile : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision){
 		if (collision.rigidbody != null ) {
-			var damageable = collision.rigidbody.gameObject.GetComponent<IDamageable> ();
+			var damageable = collision.rigidbody.gameObject.GetComponent<ICharacteristics> ();
 			if (damageable != null) {
 				damageable.DoDamage (GetDamageAmount());
 			}

@@ -18,7 +18,7 @@ public class DeckTrigger : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider collider) {
-		var player = collider.gameObject.GetComponent<ThirdPersonUserControl> ();
+		var player = collider.gameObject.GetComponent<ThirdPersonPlayerController> ();
 		if (player == null) {
 			return;
 		}
@@ -26,7 +26,7 @@ public class DeckTrigger : MonoBehaviour {
 	}
 
 	void OnTriggerExit(Collider collider) {
-		var player = collider.gameObject.GetComponent<ThirdPersonUserControl> ();
+		var player = collider.gameObject.GetComponent<ThirdPersonPlayerController> ();
 
 		if (player == null) {
 			return;

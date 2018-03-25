@@ -5,16 +5,8 @@ using UnityEngine.Networking;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Camera))]
-public class ShipController : NetworkBehaviour
+public class ShipController : NetworkBehaviour , IShip
 {
-
-	public PlayerController Driver { get; set; }
-
-	public PlayerController Shooter { get; set; }
-
-	public GunController GunController { get; set; }
-
-	public Camera ShipCamera;
 	private Rigidbody rb;
 
 	//Axis movement
@@ -53,21 +45,37 @@ public class ShipController : NetworkBehaviour
 	//space anchors
 	public GameObject TurretAttachPosition;
 
+	#region IShip implementation
+	public Camera Camera { get; set;}
+	public IPlayer Driver {
+		get;
+		set;
+	}
+	public IPlayer Shooter {
+		get;
+		set;
+	}
+	public GunController GunController {
+		get;
+		set;
+	}
+	#endregion
 
 	// Use this for initialization
 	void Start ()
 	{
 		rb = gameObject.GetComponent<Rigidbody> ();
-		ShipCamera = GetComponentInChildren<Camera> ();
-
 		if (GunPrefab != null) {
 			var gun = (GameObject)Instantiate (
-				          GunPrefab,
-				          TurretAttachPosition.transform.position,
-				          Quaternion.Euler (0, 0, 0));
+				GunPrefab,
+				TurretAttachPosition.transform.position,
+				Quaternion.Euler (0, 0, 0));
 			GunController = gun.GetComponentInChildren<GunController> ();
 			GunController.Ship = this;
 		}
+
+
+		GunController = GetComponentInChildren<GunController> ();
 
 		// save default rotation
 		angleX = this.transform.rotation.eulerAngles.x;
@@ -147,10 +155,10 @@ public class ShipController : NetworkBehaviour
 	void OnDestroy ()
 	{
 		if (Shooter != null) {
-			Destroy (Shooter.gameObject);
+			//todo kill shooter
 		}
 		if (Driver != null) {
-			Destroy (Driver.gameObject);
+			//todo kill driver
 		}
 		if (GunController != null) {
 			Destroy (GunController.gameObject);

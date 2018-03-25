@@ -10,8 +10,8 @@ public class GunController : NetworkBehaviour {
 	private float angleX = 0;
 	private float angleY = 0;
 
-	public PlayerController Shooter;
-	public ShipController Ship;
+	public IPlayer Shooter;
+	public IShip Ship;
 
 	//space positions
 	public GameObject CannonBallSpawnPosition;
@@ -50,7 +50,7 @@ public class GunController : NetworkBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (Ship != null) {
-			this.transform.position = Ship.TurretAttachPosition.transform.position;
+			this.transform.position = ((ShipController)Ship).TurretAttachPosition.transform.position;
 		}
 		if (Shooter == null) {
 			return;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Characteristics : MonoBehaviour , IDamageable {
+public class Characteristics : MonoBehaviour , ICharacteristics {
 
 	private int maxHealth = 100;
 	private int health = 100;
@@ -31,6 +31,11 @@ public class Characteristics : MonoBehaviour , IDamageable {
 	public void DoDamage (int amount)
 	{
 		Health -= amount;
+	}
+
+	public void Destroy ()
+	{
+		Destroy (gameObject);
 	}
 
 	#endregion
