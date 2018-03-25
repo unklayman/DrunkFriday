@@ -58,10 +58,9 @@ public class ThirdPersonPlayerController : NetworkBehaviour, IPlayer
 
 	void Interact (bool isInteractionCalled)
 	{
-		var lm = LayerMask.GetMask (FridayGameLayers.INTERACTABLE);
+		var lm = LayerMask.GetMask (LayerMask.LayerToName((int)FridayGameLayers.Interactable));
 		RaycastHit hit;
-		if (Physics.Raycast (transform.position, gameObject.transform.TransformDirection (Vector3.forward), out hit, 1.5f, lm)) {
-			
+		if (Physics.Raycast (transform.position, Camera.transform.TransformDirection(Vector3.forward), out hit, 1f, lm)) {
 			if (isInteractionCalled) {
 				var target = hit.collider.gameObject;
 				if (target.name.Equals ("ShipControl")) {

@@ -1,9 +1,8 @@
 ﻿using System;
 
 
-	public class FridayGameLayers
+	public enum FridayGameLayers : int
 	{
-	public static readonly string INTERACTABLE = "Interactable";
-		
+	 	Interactable = 8
 	}
 
