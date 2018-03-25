@@ -1096,7 +1096,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcac542084b280d4eaa4924153d30cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShipCamera: {fileID: 0}
   MaxSpeed: 3
   Thrust: 0
   ThrustDelta: 0.1
